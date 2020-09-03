@@ -1,13 +1,12 @@
 defmodule Exo do
 
-  def test do
+  def test() do
     receive do
-      {:ok, msg} -> msg
-      {:error, desc} -> "ERROR : " <> desc
-      #_ -> "no case"
+      {:ok, msg} -> IO.puts(msg)
+      {:error, desc} -> IO.puts("ERROR : " <> desc)
     end
 
     test()
   end
-  
+
 end
