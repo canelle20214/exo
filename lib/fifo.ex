@@ -24,6 +24,8 @@ defmodule Fifo do
     {:ok, %{}}
   end
 
+
+
   def handle_cast({:push, element}, fifo) do
     new_queue = :queue.in(element, fifo)
     {:reply, {:ok, element}, new_queue}
