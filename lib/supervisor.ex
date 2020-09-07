@@ -1,13 +1,9 @@
-defmodule FifoSupervisor do
-  use Supervisor
-  @name __MODULE__
+defmodule Message.Supervisor do
+  use Application
 
-
-  def start_link(opts) do
-    Supervisor.start_link(@name, :ok, opts)
+  def start(_type, _arg) do
+    children = [ Message ]
+    Supervisor.start_link(children, [strategy: :one_for_one])
   end
 
-  def init(:ok) do
-    Supervisor.init([{ Fifo, name: Fifo }], strategy: :one_for_one)
-  end
 end

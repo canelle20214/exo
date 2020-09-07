@@ -2,7 +2,8 @@
              [{applications,[kernel,stdlib,elixir,logger]},
               {description,"exo"},
               {modules,['Elixir.Exo','Elixir.Fifo','Elixir.FifoApplication',
-                        'Elixir.FifoSupervisor','Elixir.TeamExample']},
+                        'Elixir.FifoSupervisor','Elixir.Message',
+                        'Elixir.Message.Supervisor','Elixir.TeamExample']},
               {registered,[]},
               {vsn,"0.1.0"},
-              {mod,{'Elixir.FifoApplication',[]}}]}.
+              {mod,{'Elixir.Message.Supervisor',[]}}]}.

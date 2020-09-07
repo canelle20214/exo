@@ -14,7 +14,7 @@ defmodule Exo.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      mod: {FifoApplication, []},
+      mod: {Message.Supervisor, []},
       extra_applications: [:logger]
     ]
   end
