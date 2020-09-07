@@ -40,3 +40,4 @@ defmodule TeamExample do
   def handle_call(:team, _from, state) do
     {:reply, state, state}
   end
+end

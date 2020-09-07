@@ -4,8 +4,8 @@ defmodule Fifo do
   @name __MODULE__
 
 
-  def start_link do
-    GenServer.start_link(__MODULE__, :ok, name: @name)
+  def start_link(opt) do
+    GenServer.start_link(__MODULE__, :ok, opt)
   end
 
 
@@ -21,40 +21,23 @@ defmodule Fifo do
 
 
   def init(:ok) do
-    {:ok, %{}}
+    {:ok, []}
   end
 
 
 
-  def handle_cast({:push, element}, status) do
-    fifo =
-      if Map.has_key?(status, :fifo) do
-        {_a, b} = Map.fetch(status, :fifo)
-        b
-      else
-        :queue.new()
-      end
-    new_queue = :queue.in(element, fifo)
-    {:noreply, Map.put(status, :fifo, new_queue)}
+  def handle_cast({:push, element}, state) do
+    list = [ element | state ]
+    {:noreply, list}
   end
 
-
-  def handle_call(:pop, _from, status) do
-    fifo =
-      if Map.has_key?(status, :fifo) do
-        {_a, b} = Map.fetch(status, :fifo)
-        b
-      else
-        :queue.new()
-      end
-    {new_queue, last_element} =
-      unless :queue.is_empty(fifo) do
-        {:queue.drop(fifo), :queue.get(fifo)}
-      else
-        {:queue.new(), :noelement}
-      end
-    {:reply, {:ok, last_element}, Map.put(status, :fifo, new_queue)}
+  def handle_call(:pop, _from, []) do
+    {:reply, nil, []}
   end
 
+  def handle_call(:pop, _from, state) do
+    [ head | tail ] = Enum.reverse(state)
+    {:reply, head, Enum.reverse(tail)}
+  end
 
 end
