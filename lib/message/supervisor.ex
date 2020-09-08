@@ -1,8 +1,8 @@
-defmodule Chat.Supervisor do
+defmodule Message.Supervisor do
   use Application
 
   def start(_type, _arg) do
-    children = [ FirstChat, SecondChat ]
+    children = [ Message ]
     Supervisor.start_link(children, [strategy: :one_for_one])
   end
 
