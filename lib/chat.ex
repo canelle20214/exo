@@ -12,22 +12,22 @@ defmodule Chat do
   end
 
 
-  def send_message(pid, message) do
-      list = Supervisor.which_children(Sup)
-      children = Enum.filter(list, fn {_id, child, _type, module} ->
-      module == [__MODULE__] && child !== pid
+  def send_message(name, message) do
+    Supervisor.which_children(Sup)
+    |> Enum.filter(fn {id, _child, _type, module} ->
+      module == [__MODULE__] && id !== name
     end)
-    Enum.each(children, fn {_id, child, _type, _modules} ->
-      GenServer.cast(child, {:send_message, message, child})
+    |> Enum.each(fn {id, _child, _type, _modules} ->
+      GenServer.cast(id, {:send_message, message, id})
     end)
   end
 
-  def add_message(pid, message) do
-    GenServer.cast(pid, {:add_message, message})
+  def add_message(name, message) do
+    GenServer.cast(name, {:add_message, message})
   end
 
-  def get_messages(pid) do
-    GenServer.call(pid, :get_messages)
+  def get_messages(name) do
+    GenServer.call(name, :get_messages)
   end
 
 
