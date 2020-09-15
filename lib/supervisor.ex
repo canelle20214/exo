@@ -1,8 +1,10 @@
 defmodule Chat.Supervisor do
   use Supervisor
 
+
   def start_link(_) do
     children = [
+      Friends.Repo,
       {Cluster.Supervisor, [Application.get_env(:libcluster, :topologies), [name: MyApp.ClusterSupervisor]]}
     ]
     Supervisor.start_link(children, [strategy: :one_for_one, name: Sup, supervisor: {Node.self(), :sup}])

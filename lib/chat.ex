@@ -30,7 +30,7 @@ defmodule Chat do
   end
 
   def handle_info({:tcp, _socket, data}, %State{name: nil} = state) do
-    newstate = struct(State, [name: String.trim(data), socket: state.socket])
+    newstate = struct(State, [name: String.trim(data), socket: state.socket])#insert user in db
     :gen_tcp.send(state.socket, "Nice to meet you #{newstate.name} !\r\n")
     {:noreply, newstate}
   end

@@ -2,12 +2,22 @@
 # and its dependencies with the aid of the Mix.Config module.
 use Mix.Config
 
+config :exo, Chat.Repo,
+  database: "chat_repo",
+  username: "postgres",
+  password: "postgres",
+  hostname: "localhost"
+
 config :libcluster,
   topologies: [
     gossip: [
       strategy: Cluster.Strategy.Gossip
     ]
 ]
+
+config :exo, ecto_repos: [Chat.Repo]
+
+config :postgrex, :json_library, SomeOtherLib
 
 # This configuration is loaded before any dependency and is restricted
 # to this project. If another project depends on this project, this
