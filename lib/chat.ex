@@ -51,7 +51,7 @@ defmodule Chat do
     {:noreply, state}
   end
 
-  def handle_info({from, data}, state) do # when from !== socket
+  def handle_info({from, data}, state) do
     :gen_tcp.send(state.socket, "#{from.name} said: #{data} \r\n")
     {:noreply, state}
   end
@@ -77,42 +77,5 @@ defmodule Chat do
     Logger.warn "shutdown #{inspect state}"
     :ok
   end
-
-
-  # :inet.setopts(socket, active: :once)
-
-
-  # def send_message(pid, message) do
-  #   :pg2.get_members(:first_group)
-  #   |> Enum.filter(fn n ->
-  #     n !== pid
-  #   end)
-  #   |> Enum.each(fn n ->
-  #     GenServer.cast(n, {:send_message, message, n})
-  #   end)
-  # end
-
-  # def add_message(pid, message) do
-  #   GenServer.cast(pid, {:add_message, message})
-  # end
-
-  # def get_messages(pid) do
-  #   GenServer.call(pid, :get_messages)
-  # end
-
-
-
-  # def handle_call(:get_messages, _from, state) do
-  #   {:reply, Enum.reverse(state), state}
-  # end
-
-  # def handle_cast({:add_message, message}, state) do
-  #   {:noreply, [ message | state ]}
-  # end
-
-  # def handle_cast({:send_message, message, to}, state) do
-  #   Chat.add_message(to, message)
-  #   {:noreply, state}
-  # end
 
 end

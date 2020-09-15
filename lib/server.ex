@@ -1,12 +1,9 @@
 defmodule Chat.Server do
   require Logger
-  #méthode 1
 
   def start(port) do
     {:ok, listensocket} = :gen_tcp.listen(port, [{:active, true}, {:reuseaddr, true}, :binary])
-    Process.spawn(fn ->
-      accept(listensocket)
-    end, [:link])
+    accept(listensocket)
   end
 
   def accept(listensocket) do
@@ -15,10 +12,9 @@ defmodule Chat.Server do
         {:ok, pid} = Chat.start_link(socket)
         :gen_tcp.controlling_process(socket, pid)
       err ->
-        Logger.warn "Chat.Server -> no socket"
+        Logger.error "No socket #{inspect err}"
     end
     accept(listensocket)
-
   end
 
 end
