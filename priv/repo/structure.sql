@@ -54,6 +54,16 @@ ALTER SEQUENCE public.message_id_seq OWNED BY public.message.id;
 
 
 --
+-- Name: priv/repo/; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public."priv/repo/" (
+    version bigint NOT NULL,
+    inserted_at timestamp(0) without time zone
+);
+
+
+--
 -- Name: room; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -192,6 +202,14 @@ ALTER TABLE ONLY public."user" ALTER COLUMN id SET DEFAULT nextval('public.user_
 
 ALTER TABLE ONLY public.message
     ADD CONSTRAINT message_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: priv/repo/ priv/repo/_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public."priv/repo/"
+    ADD CONSTRAINT "priv/repo/_pkey" PRIMARY KEY (version);
 
 
 --

@@ -1,12 +1,19 @@
 defmodule Chat.Server do
   require Logger
+  use GenServer
 
-  def start(port) do
-    {:ok, listensocket} = :gen_tcp.listen(port, [{:active, true}, {:reuseaddr, true}, :binary])
-    accept(listensocket)
+
+
+  def start_link(listensocket) do
+    GenServer.start_link(__MODULE__, listensocket)
   end
 
-  def accept(listensocket) do
+  def init(listensocket) do
+    send(self(), {:accept, listensocket})
+    {:ok, listensocket}
+  end
+
+  def handle_info({:accept, listensocket}, state) do
     case :gen_tcp.accept(listensocket) do
       {:ok, socket} ->
         {:ok, pid} = Chat.start_link(socket)
@@ -14,7 +21,8 @@ defmodule Chat.Server do
       err ->
         Logger.error "No socket #{inspect err}"
     end
-    accept(listensocket)
+    Chat.DynamicSupervisor.start_child()
+    {:noreply, state}
   end
 
 end

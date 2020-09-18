@@ -3,10 +3,13 @@
 use Mix.Config
 
 config :exo, Chat.Repo,
-  database: "chat_repo",
+  database: "exo_repo",
   username: "postgres",
   password: "postgres",
   hostname: "localhost"
+
+
+config :exo, ecto_repos: [Chat.Repo]
 
 config :libcluster,
   topologies: [
@@ -14,8 +17,6 @@ config :libcluster,
       strategy: Cluster.Strategy.Gossip
     ]
 ]
-
-config :exo, ecto_repos: [Chat.Repo]
 
 config :postgrex, :json_library, SomeOtherLib
 

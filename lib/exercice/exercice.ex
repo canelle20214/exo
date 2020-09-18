@@ -1,4 +1,4 @@
-defmodule Message do
+defmodule Exercice do
   use GenServer
 
   @name __MODULE__
