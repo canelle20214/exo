@@ -3,7 +3,7 @@ defmodule Chat.Application do
   require Logger
 
   def start(_, _) do
-    :pg2.create(:first_group)
+    :ets.new(:chat,[:ordered_set, :public, :named_table])
     children = [
       Chat.Repo,
       %{
